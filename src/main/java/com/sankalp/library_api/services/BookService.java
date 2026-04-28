@@ -1,6 +1,7 @@
 package com.sankalp.library_api.services;
 
 import com.sankalp.library_api.dtos.BookCreateRequest;
+import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
 import org.springframework.stereotype.Service;
 import com.sankalp.library_api.repositories.BookRepository;
@@ -27,5 +28,10 @@ public class BookService {
         newBook.setPublishedYear(dto.getPublishedYear());
 
         return bookRepository.save(newBook);
+    }
+
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 }

@@ -27,4 +27,9 @@ public class BookController {
     public Book addBook(@Valid @RequestBody BookCreateRequest requestDTO) {
         return bookService.saveBook(requestDTO);
     }
+
+    @GetMapping("/{id}")
+    public Book fetchBook(@PathVariable Long id) {
+        return bookService.getBookById(id);
+    }
 }

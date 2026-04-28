@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "The Martian",
+  "author": "Shakespeare",
+  "publishedYear": 2015
+}
+
+###
+GET http://localhost:8080/api/books/99
