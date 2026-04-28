@@ -1,7 +1,8 @@
 package com.sankalp.library_api.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 public class BookCreateRequest {
     @NotBlank(message = "Title is required!")
@@ -10,7 +11,8 @@ public class BookCreateRequest {
     @NotBlank(message = "Author is required")
     private String author;
 
-    @PastOrPresent(message = "Year cannot be future")
+    @Min(value = 1450, message = "Year is too old to be valid!")
+    @Max(value = 2026, message = "Year cannot be in future!")
     private int publishedYear;
 
     public String getTitle() { return title; }
