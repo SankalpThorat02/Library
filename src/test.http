@@ -1,11 +1,10 @@
-POST http://localhost:8080/api/books
+POST http://localhost:8080/api/members
 Content-Type: application/json
 
 {
-  "title": "Alchemist",
-  "author": "Paulo coelo",
-  "publishedYear": 2008
+  "fullName": "Alice",
+  "email": "alice@gmail.com"
 }
 
 ###
-GET http://localhost:8080/api/books/99
+GET http://localhost:8080/api/members/50
