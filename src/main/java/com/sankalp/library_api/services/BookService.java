@@ -5,8 +5,10 @@ import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
 
+import com.sankalp.library_api.models.Member;
 import org.springframework.stereotype.Service;
 import com.sankalp.library_api.repositories.BookRepository;
+import com.sankalp.library_api.services.MemberService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +19,11 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final MemberService memberService;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, MemberService memberService) {
         this.bookRepository = bookRepository;
+        this.memberService = memberService;
     }
 
     public List<Book> getAllBooks() {
@@ -67,13 +71,15 @@ public class BookService {
         return bookRepository.findByAuthor(author);
     }
 
-    public Book borrowBook(Long id) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException(id));
+    public Book borrowBook(Long bookId, Long memberId) {
+        Member member = memberService.getMemberById(memberId);
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
 
         boolean isAvailable = book.getAvailable();
         if(!isAvailable) {
-            throw new BookAlreadyBorrowedException(id);
+            throw new BookAlreadyBorrowedException(bookId);
         }
 
         book.setAvailable(false);

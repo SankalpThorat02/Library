@@ -67,9 +67,9 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-    @PatchMapping("/borrow/{id}")
-    public ResponseEntity<Book> borrowBook(@PathVariable Long id) {
-        Book book = bookService.borrowBook(id);
+    @PatchMapping("/borrow/{bookId}")
+    public ResponseEntity<Book> borrowBook(@PathVariable Long bookId, @RequestParam Long memberId) {
+        Book book = bookService.borrowBook(bookId, memberId);
         return ResponseEntity.ok(book);
     }
 }
