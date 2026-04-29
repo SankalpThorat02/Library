@@ -6,8 +6,13 @@ import com.sankalp.library_api.models.Book;
 import com.sankalp.library_api.services.BookService;
 
 import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @RestController
@@ -23,6 +28,12 @@ public class BookController {
     @GetMapping
     public List<Book> fetchInventory() {
         return bookService.getAllBooks();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Book>> fetchAllBooks(@RequestParam Pageable pageable) {
+        Page<Book> bookPage = bookService.getAllBooks(pageable);
+        return ResponseEntity.ok(bookPage);
     }
 
     @PostMapping

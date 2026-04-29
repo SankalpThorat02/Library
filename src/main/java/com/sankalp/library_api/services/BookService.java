@@ -4,8 +4,13 @@ import com.sankalp.library_api.dtos.BookCreateRequest;
 import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
+
 import org.springframework.stereotype.Service;
 import com.sankalp.library_api.repositories.BookRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @Service
@@ -19,6 +24,10 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    public Page<Book> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     public Book saveBook(BookCreateRequest dto) {
