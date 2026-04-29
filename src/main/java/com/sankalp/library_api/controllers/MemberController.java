@@ -5,6 +5,7 @@ import com.sankalp.library_api.models.Member;
 import com.sankalp.library_api.services.MemberService;
 
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,5 +27,20 @@ public class MemberController {
     @GetMapping("/{id}")
     public Member fetchMember(@PathVariable Long id) {
         return memberService.getMemberById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Member> updateMember(
+            @PathVariable Long id,
+            @Valid @RequestBody MemberCreateRequest dto) {
+
+            Member updatedMember = memberService.updateMember(id, dto);
+            return ResponseEntity.ok(updatedMember);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
+        return ResponseEntity.noContent().build();
     }
 }

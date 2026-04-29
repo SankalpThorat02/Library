@@ -34,4 +34,22 @@ public class BookService {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }
+
+    public Book updateBook(Long id, BookCreateRequest dto) {
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
+        existingBook.setTitle(dto.getTitle());
+        existingBook.setAuthor(dto.getAuthor());
+        existingBook.setPublishedYear(dto.getPublishedYear());
+
+        return bookRepository.save(existingBook);
+    }
+
+    public void deleteBook(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
+        bookRepository.delete(book);
+    }
 }

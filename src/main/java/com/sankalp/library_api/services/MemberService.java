@@ -32,4 +32,21 @@ public class MemberService {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
+
+    public Member updateMember(Long id, MemberCreateRequest dto) {
+        Member existingMember = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(id));
+
+        existingMember.setFullName(dto.getFullName());
+        existingMember.setEmail(dto.getEmail());
+
+        return memberRepository.save(existingMember);
+    }
+
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(id));
+
+        memberRepository.delete(member);
+    }
 }
