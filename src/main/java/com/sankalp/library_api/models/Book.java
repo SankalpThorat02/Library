@@ -3,7 +3,7 @@ package com.sankalp.library_api.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "books")
+@Table(name = "sankalp_books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -12,7 +12,7 @@ public class Book {
     private String title;
     private String author;
     private int publishedYear;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     public Book() {}
     public Book(String title, String author, int publishedYear, boolean isAvailable) {

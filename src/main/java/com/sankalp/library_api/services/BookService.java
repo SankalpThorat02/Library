@@ -2,6 +2,7 @@ package com.sankalp.library_api.services;
 
 import com.sankalp.library_api.dtos.BookCreateRequest;
 import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
+import com.sankalp.library_api.exceptions.BookNotBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
 
@@ -83,6 +84,21 @@ public class BookService {
         }
 
         book.setAvailable(false);
+        return bookRepository.save(book);
+    }
+
+    public Book returnBook(Long bookId, Long memberId) {
+        Member member = memberService.getMemberById(memberId);
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+
+        boolean isAvailable = book.getAvailable();
+        if(isAvailable) {
+            throw new BookNotBorrowedException(bookId);
+        }
+
+        book.setAvailable(true);
         return bookRepository.save(book);
     }
 }

@@ -3,7 +3,7 @@ package com.sankalp.library_api.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "members")
+@Table(name = "sankalp_members")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

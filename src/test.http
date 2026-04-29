@@ -1,10 +1,42 @@
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "Butterfingers",
+  "author": "Suddha Murthy",
+  "publishedYear": 2017
+}
+
+###
+GET http://localhost:8080/api/books
+
+###
+DELETE http://localhost:8080/api/books/4
+
+###
+PUT http://localhost:8080/api/books/52
+Content-Type: application/json
+
+{
+  "title": "Butter fingers",
+  "author": "Suddha Murthy",
+  "publishedYear": 2016
+}
+
+###
+GET http://localhost:8080/api/books/search?author=Sankalp
+
+###
 POST http://localhost:8080/api/members
 Content-Type: application/json
 
 {
-  "fullName": "Alice",
-  "email": "alice@gmail.com"
+  "fullName": "Sankalp Thorat",
+  "email": "sankalp@email"
 }
 
 ###
-GET http://localhost:8080/api/members/50
+PATCH http://localhost:8080/api/books/borrow/3?memberId=1
+
+###
+PATCH http://localhost:8080/api/books/return/53?memberId=1

@@ -1,7 +1,6 @@
 package com.sankalp.library_api.controllers;
 
 import com.sankalp.library_api.dtos.BookCreateRequest;
-import com.sankalp.library_api.dtos.MemberCreateRequest;
 import com.sankalp.library_api.models.Book;
 import com.sankalp.library_api.services.BookService;
 
@@ -30,20 +29,22 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-    @GetMapping
-    public ResponseEntity<Page<Book>> fetchAllBooks(@RequestParam Pageable pageable) {
-        Page<Book> bookPage = bookService.getAllBooks(pageable);
-        return ResponseEntity.ok(bookPage);
-    }
+//    @GetMapping
+//    public ResponseEntity<Page<Book>> fetchAllBooks(Pageable pageable) {
+//        Page<Book> bookPage = bookService.getAllBooks(pageable);
+//        return ResponseEntity.ok(bookPage);
+//    }
 
     @PostMapping
-    public Book addBook(@Valid @RequestBody BookCreateRequest requestDTO) {
-        return bookService.saveBook(requestDTO);
+    public ResponseEntity<Book> addBook(@Valid @RequestBody BookCreateRequest requestDTO) {
+        Book newBook = bookService.saveBook(requestDTO);
+        return ResponseEntity.ok(newBook);
     }
 
     @GetMapping("/{id}")
-    public Book fetchBook(@PathVariable Long id) {
-        return bookService.getBookById(id);
+    public ResponseEntity<Book> fetchBook(@PathVariable Long id) {
+        Book existingBook = bookService.getBookById(id);
+        return ResponseEntity.ok(existingBook);
     }
 
     @PutMapping("/{id}")
@@ -70,6 +71,12 @@ public class BookController {
     @PatchMapping("/borrow/{bookId}")
     public ResponseEntity<Book> borrowBook(@PathVariable Long bookId, @RequestParam Long memberId) {
         Book book = bookService.borrowBook(bookId, memberId);
+        return ResponseEntity.ok(book);
+    }
+
+    @PatchMapping("/return/{bookId}")
+    public ResponseEntity<Book> returnBook(@PathVariable Long bookId, @RequestParam Long memberId) {
+        Book book = bookService.returnBook(bookId, memberId);
         return ResponseEntity.ok(book);
     }
 }
