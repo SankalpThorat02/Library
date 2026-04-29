@@ -12,12 +12,14 @@ public class Book {
     private String title;
     private String author;
     private int publishedYear;
+    private boolean isAvailable;
 
     public Book() {}
-    public Book(String title, String author, int publishedYear) {
+    public Book(String title, String author, int publishedYear, boolean isAvailable) {
         this.title = title;
         this.author = author;
         this.publishedYear = publishedYear;
+        this.isAvailable = isAvailable;
     }
 
     public Long getId() { return id; }
@@ -31,4 +33,7 @@ public class Book {
 
     public int getPublishedYear() { return publishedYear; }
     public void setPublishedYear(int publishedYear) { this.publishedYear = publishedYear; }
+
+    public boolean getAvailable() { return isAvailable; }
+    public void setAvailable(boolean isAvailable) { this.isAvailable = isAvailable; }
 }

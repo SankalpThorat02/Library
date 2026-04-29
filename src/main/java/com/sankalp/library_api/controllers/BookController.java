@@ -49,4 +49,16 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Book>> fetchBookByAuthor(@RequestParam String author) {
+        List<Book> books = bookService.getBookByAuthor(author);
+        return ResponseEntity.ok(books);
+    }
+
+    @PatchMapping("/borrow/{id}")
+    public ResponseEntity<Book> borrowBook(@PathVariable Long id) {
+        Book book = bookService.borrowBook(id);
+        return ResponseEntity.ok(book);
+    }
 }

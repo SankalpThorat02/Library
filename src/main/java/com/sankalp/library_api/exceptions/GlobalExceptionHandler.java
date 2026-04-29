@@ -21,4 +21,12 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BookAlreadyBorrowedException.class)
+    public ResponseEntity<ApiError> handleBookAlreadyBorrowed(BookAlreadyBorrowedException ex) {
+        ApiError errorResponse = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }

@@ -24,6 +24,11 @@ public class MemberController {
         return memberService.saveMember(requestDTO);
     }
 
+    @GetMapping
+    public List<Member> fetchMembers() {
+        return memberService.getAllMembers();
+    }
+
     @GetMapping("/{id}")
     public Member fetchMember(@PathVariable Long id) {
         return memberService.getMemberById(id);

@@ -1,6 +1,7 @@
 package com.sankalp.library_api.services;
 
 import com.sankalp.library_api.dtos.BookCreateRequest;
+import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,22 @@ public class BookService {
                 .orElseThrow(() -> new BookNotFoundException(id));
 
         bookRepository.delete(book);
+    }
+
+    public List<Book> getBookByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    public Book borrowBook(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
+        boolean isAvailable = book.getAvailable();
+        if(!isAvailable) {
+            throw new BookAlreadyBorrowedException(id);
+        }
+
+        book.setAvailable(false);
+        return bookRepository.save(book);
     }
 }
