@@ -153,4 +153,13 @@ public class BookService {
 
         return (String) query.getOutputParameterValue("out_message");
     }
+
+    public  String deleteExistingBook(Long bookId) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.deleteBook");
+
+        query.setParameter("in_book_id", bookId);
+        query.execute();
+
+        return (String) query.getOutputParameterValue("out_message");
+    }
 }

@@ -102,4 +102,10 @@ public class BookController {
         String res = bookService.checkoutBook(bookId);
         return ResponseEntity.ok(res);
     }
+
+    @DeleteMapping("/delete/{bookId}")
+    public ResponseEntity<String> deleteExistingBook(@PathVariable Long bookId) {
+        String res = bookService.deleteExistingBook(bookId);
+        return ResponseEntity.ok(res);
+    }
 }

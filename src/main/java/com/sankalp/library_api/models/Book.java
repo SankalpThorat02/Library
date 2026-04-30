@@ -39,6 +39,15 @@ import java.math.BigDecimal;
         }
 )
 
+@NamedStoredProcedureQuery(
+        name = "Book.deleteBook",
+        procedureName = "delete_book",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_book_id", type = Long.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
+        }
+)
+
 @Entity
 @Table(name = "sankalp_books")
 public class Book {

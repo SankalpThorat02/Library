@@ -43,3 +43,6 @@ PATCH http://localhost:8080/api/books/return/53?memberId=1
 
 ###
 PATCH http://localhost:8080/api/books/checkout/54
+
+###
+DELETE http://localhost:8080/api/books/delete/1001
