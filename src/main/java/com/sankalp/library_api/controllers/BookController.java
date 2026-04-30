@@ -39,10 +39,16 @@ public class BookController {
 //        return ResponseEntity.ok(bookPage);
 //    }
 
+//    @PostMapping
+//    public ResponseEntity<Book> addBook(@Valid @RequestBody BookCreateRequest requestDTO) {
+//        Book newBook = bookService.saveBook(requestDTO)
+//        return ResponseEntity.ok(newBook);
+//    }
+
     @PostMapping
-    public ResponseEntity<Book> addBook(@Valid @RequestBody BookCreateRequest requestDTO) {
-        Book newBook = bookService.saveBook(requestDTO);
-        return ResponseEntity.ok(newBook);
+    public ResponseEntity<Long> insertBook(@Valid @RequestBody BookCreateRequest requestDTO) {
+        Long id = bookService.createNewBook(requestDTO);
+        return ResponseEntity.ok(id);
     }
 
     @GetMapping("/{id}")
@@ -89,5 +95,11 @@ public class BookController {
         BigDecimal fee = bookService.calculateReturnFee(days);
 
         return ResponseEntity.ok(fee);
+    }
+
+    @PatchMapping ("/checkout/{bookId}")
+    public ResponseEntity<String> checkoutBook(@PathVariable Long bookId) {
+        String res = bookService.checkoutBook(bookId);
+        return ResponseEntity.ok(res);
     }
 }

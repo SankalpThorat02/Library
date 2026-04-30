@@ -2,13 +2,13 @@ POST http://localhost:8080/api/books
 Content-Type: application/json
 
 {
-  "title": "Butterfingers",
-  "author": "Suddha Murthy",
-  "publishedYear": 2017
+  "title": "Rich Dad, Poor Dad",
+  "author": "Sankalp",
+  "publishedYear": 2013
 }
 
 ###
-GET http://localhost:8080/api/books/return/fee?days=5
+GET http://localhost:8080/api/books
 
 ###
 DELETE http://localhost:8080/api/books/4
@@ -40,3 +40,6 @@ PATCH http://localhost:8080/api/books/borrow/56?memberId=1
 
 ###
 PATCH http://localhost:8080/api/books/return/53?memberId=1
+
+###
+PATCH http://localhost:8080/api/books/checkout/54

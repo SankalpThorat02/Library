@@ -19,6 +19,26 @@ import java.math.BigDecimal;
         }
 )
 
+@NamedStoredProcedureQuery(
+        name = "Book.insertNewBook",
+        procedureName = "insert_new_book",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_author", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_title", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_published_year", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_new_id", type = Long.class)
+        }
+)
+
+@NamedStoredProcedureQuery(
+        name = "Book.checkout",
+        procedureName = "checkout_book",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_book_id", type = Long.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
+        }
+)
+
 @Entity
 @Table(name = "sankalp_books")
 public class Book {

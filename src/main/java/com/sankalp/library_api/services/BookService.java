@@ -8,6 +8,11 @@ import com.sankalp.library_api.exceptions.BookNotFoundException;
 import com.sankalp.library_api.models.Book;
 
 import com.sankalp.library_api.models.Member;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
+import lombok.extern.java.Log;
+import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
 import com.sankalp.library_api.repositories.BookRepository;
 import com.sankalp.library_api.services.MemberService;
@@ -24,6 +29,9 @@ import java.util.List;
 @Service
 public class BookService {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private final BookRepository bookRepository;
     private final MemberService memberService;
     private final BookDao bookDao;
@@ -35,7 +43,7 @@ public class BookService {
     }
 
     public List<Book> getAllBooks() {
-        return bookDao.fetchAvailableBooks();
+        return entityManager.createNamedQuery("Book.findAllAvailableBooks", Book.class).getResultList();
     }
 
     public Page<Book> getAllBooks(Pageable pageable) {
@@ -117,6 +125,32 @@ public class BookService {
     }
 
     public BigDecimal calculateReturnFee(int daysLate) {
-        return bookDao.getLateFee(daysLate);
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.calculateLateFee");
+
+        query.setParameter("in_days_late", daysLate);
+        query.execute();
+
+        return (BigDecimal) query.getOutputParameterValue("out_total_fee");
+    }
+
+    public Long createNewBook(BookCreateRequest dto) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.insertNewBook");
+
+        query.setParameter("in_author", dto.getAuthor());
+        query.setParameter("in_title", dto.getTitle());
+        query.setParameter("in_published_year", dto.getPublishedYear());
+
+        query.execute();
+
+        return (Long) query.getOutputParameterValue("out_new_id");
+    }
+
+    public String checkoutBook(Long bookId) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.checkout");
+
+        query.setParameter("in_book_id", bookId);
+        query.execute();
+
+        return (String) query.getOutputParameterValue("out_message");
     }
 }
