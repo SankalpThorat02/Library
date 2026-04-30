@@ -1,5 +1,6 @@
 package com.sankalp.library_api.controllers;
 
+import com.sankalp.library_api.dao.BookDao;
 import com.sankalp.library_api.dtos.BookCreateRequest;
 import com.sankalp.library_api.models.Book;
 import com.sankalp.library_api.services.BookService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -19,9 +21,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final BookDao bookDao;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookDao bookDao) {
         this.bookService = bookService;
+        this.bookDao = bookDao;
     }
 
     @GetMapping
@@ -78,5 +82,12 @@ public class BookController {
     public ResponseEntity<Book> returnBook(@PathVariable Long bookId, @RequestParam Long memberId) {
         Book book = bookService.returnBook(bookId, memberId);
         return ResponseEntity.ok(book);
+    }
+
+    @GetMapping("/return/fee")
+    public ResponseEntity<BigDecimal> getLateFeeAmount(@RequestParam int days) {
+        BigDecimal fee = bookService.calculateReturnFee(days);
+
+        return ResponseEntity.ok(fee);
     }
 }

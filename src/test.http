@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/books
+GET http://localhost:8080/api/books/return/fee?days=5
 
 ###
 DELETE http://localhost:8080/api/books/4
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8080/api/books/borrow/3?memberId=1
+PATCH http://localhost:8080/api/books/borrow/56?memberId=1
 
 ###
 PATCH http://localhost:8080/api/books/return/53?memberId=1

@@ -2,6 +2,23 @@ package com.sankalp.library_api.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
+@NamedNativeQuery(
+        name = "Book.findAllAvailableBooks",
+        query = "SELECT * FROM SANKALP_BOOKS WHERE IS_AVAILABLE = 1",
+        resultClass = Book.class
+)
+
+@NamedStoredProcedureQuery(
+        name = "Book.calculateLateFee",
+        procedureName = "calculate_late_fee",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_days_late", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_total_fee", type = BigDecimal.class)
+        }
+)
+
 @Entity
 @Table(name = "sankalp_books")
 public class Book {
