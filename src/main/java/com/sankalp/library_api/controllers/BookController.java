@@ -108,4 +108,10 @@ public class BookController {
         String res = bookService.deleteExistingBook(bookId);
         return ResponseEntity.ok(res);
     }
+
+    @PatchMapping("/checkoutAndLog/{bookId}")
+    public ResponseEntity<String> checkoutAndLogBook(@PathVariable Long bookId, @RequestParam String librarianName) {
+        String res = bookService.checkoutAndlog(bookId, librarianName);
+        return ResponseEntity.ok(res);
+    }
 }

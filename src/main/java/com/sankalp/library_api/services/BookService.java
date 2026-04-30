@@ -11,6 +11,7 @@ import com.sankalp.library_api.models.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.StoredProcedureQuery;
+import jakarta.transaction.Transactional;
 import lombok.extern.java.Log;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
@@ -158,6 +159,17 @@ public class BookService {
         StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.deleteBook");
 
         query.setParameter("in_book_id", bookId);
+        query.execute();
+
+        return (String) query.getOutputParameterValue("out_message");
+    }
+
+    @Transactional
+    public String checkoutAndlog(Long bookId, String librarianName) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.checkoutWithLog");
+
+        query.setParameter("in_book_id", bookId);
+        query.setParameter("in_librarian_name", librarianName);
         query.execute();
 
         return (String) query.getOutputParameterValue("out_message");
