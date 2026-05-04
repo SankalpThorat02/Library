@@ -2,6 +2,7 @@ package com.sankalp.library_api.controllers;
 
 import com.sankalp.library_api.dao.BookDao;
 import com.sankalp.library_api.dtos.BookCreateRequest;
+import com.sankalp.library_api.dtos.LoginRequest;
 import com.sankalp.library_api.models.Book;
 import com.sankalp.library_api.services.BookService;
 
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
@@ -113,5 +115,16 @@ public class BookController {
     public ResponseEntity<String> checkoutAndLogBook(@PathVariable Long bookId, @RequestParam String librarianName) {
         String res = bookService.checkoutAndlog(bookId, librarianName);
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest requestDto) {
+        Map<String, Object> response = bookService.login(requestDto);
+
+        if(response.get("userId") == null) {
+            return ResponseEntity.status(401).body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
 }

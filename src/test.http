@@ -49,3 +49,12 @@ DELETE http://localhost:8080/api/books/delete/1001
 
 ###
 PATCH http://localhost:8080/api/books/checkoutAndLog/52?librarianName=Sankalp
+
+###
+POST http://localhost:8080/api/books/login
+Content-Type: application/json
+
+{
+  "username": "admin_sankalp",
+  "password": "password123"
+}

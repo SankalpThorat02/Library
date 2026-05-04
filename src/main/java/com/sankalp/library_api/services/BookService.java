@@ -2,6 +2,7 @@ package com.sankalp.library_api.services;
 
 import com.sankalp.library_api.dao.BookDao;
 import com.sankalp.library_api.dtos.BookCreateRequest;
+import com.sankalp.library_api.dtos.LoginRequest;
 import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
@@ -24,7 +25,10 @@ import org.springframework.data.domain.Pageable;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -155,6 +159,7 @@ public class BookService {
         return (String) query.getOutputParameterValue("out_message");
     }
 
+    @Transactional
     public  String deleteExistingBook(Long bookId) {
         StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Book.deleteBook");
 
@@ -173,5 +178,28 @@ public class BookService {
         query.execute();
 
         return (String) query.getOutputParameterValue("out_message");
+    }
+
+    public Map<String, Object> login(LoginRequest dto) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("User.login");
+
+        query.setParameter("in_username", dto.getUsername());
+        query.setParameter("in_password", dto.getPassword());
+
+        query.execute();
+
+        Map<String, Object> responseMap = new HashMap<>();
+        Object dbUserId = query.getOutputParameterValue("out_user_id");
+
+        if(dbUserId != null) {
+            responseMap.put("userId", ((Number) dbUserId).longValue());
+        } else {
+            responseMap.put("userId", null);
+        }
+
+        responseMap.put("role", query.getOutputParameterValue("out_role"));
+        responseMap.put("message", query.getOutputParameterValue("out_message"));
+
+        return responseMap;
     }
 }

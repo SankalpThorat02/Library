@@ -1,6 +1,7 @@
 package com.sankalp.library_api.models;
 
 import jakarta.persistence.*;
+import org.apache.catalina.User;
 
 import java.math.BigDecimal;
 
@@ -54,6 +55,18 @@ import java.math.BigDecimal;
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_book_id", type = Long.class),
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_librarian_name", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
+        }
+)
+
+@NamedStoredProcedureQuery(
+        name = "User.login",
+        procedureName = "process_library_login",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_username", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_password", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_user_id", type = Long.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_role", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
         }
 )
