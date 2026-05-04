@@ -135,4 +135,10 @@ public class BookController {
         Map<String, Object> response = bookService.update(requestDto);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/dashboard/{userId}/{role}")
+    public ResponseEntity<String> dashboard(@PathVariable Long userId, @PathVariable String role) {
+        String res = bookService.dashboard(userId, role);
+        return ResponseEntity.ok(res);
+    }
 }

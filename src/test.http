@@ -67,3 +67,6 @@ Content-Type: application/json
   "sessionId": 10,
   "pageNumber": 52
 }
+
+###
+GET http://localhost:8080/api/books/dashboard/2/MEMBER

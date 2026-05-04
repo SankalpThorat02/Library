@@ -217,4 +217,18 @@ public class BookService {
 
         return response;
     }
+
+    public String dashboard(Long userId, String role) {
+//        Member member = memberService.getMemberById(userId);
+
+        if(role.equals("HEAD_LIBRARIAN")) {
+            return "Welcome Admin! You have 5 pending book requests to approve.";
+        }
+        else if(role.equals("MEMBER")) {
+            return "Welcome Member! You have 2 books due tomorrow.";
+        }
+        else {
+            return "Error: Unauthorized Role.";
+        }
+    }
 }
