@@ -3,6 +3,7 @@ package com.sankalp.library_api.services;
 import com.sankalp.library_api.dao.BookDao;
 import com.sankalp.library_api.dtos.BookCreateRequest;
 import com.sankalp.library_api.dtos.LoginRequest;
+import com.sankalp.library_api.dtos.SessionUpdate;
 import com.sankalp.library_api.exceptions.BookAlreadyBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotBorrowedException;
 import com.sankalp.library_api.exceptions.BookNotFoundException;
@@ -201,5 +202,19 @@ public class BookService {
         responseMap.put("message", query.getOutputParameterValue("out_message"));
 
         return responseMap;
+    }
+
+    public Map<String, Object> update(SessionUpdate dto) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("User.session");
+
+        query.setParameter("in_session_id", dto.getSessionId());
+        query.setParameter("in_page_number", dto.getPageNumber());
+
+        query.execute();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", query.getOutputParameterValue("out_message"));
+
+        return response;
     }
 }

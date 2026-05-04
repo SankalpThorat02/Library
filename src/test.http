@@ -58,3 +58,12 @@ Content-Type: application/json
   "username": "admin_sankalp",
   "password": "password123"
 }
+
+###
+PUT http://localhost:8080/api/books/update
+Content-Type: application/json
+
+{
+  "sessionId": 10,
+  "pageNumber": 52
+}

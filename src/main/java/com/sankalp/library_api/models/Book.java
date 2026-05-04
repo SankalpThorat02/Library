@@ -1,6 +1,7 @@
 package com.sankalp.library_api.models;
 
 import jakarta.persistence.*;
+import lombok.extern.java.Log;
 import org.apache.catalina.User;
 
 import java.math.BigDecimal;
@@ -67,6 +68,16 @@ import java.math.BigDecimal;
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_password", type = String.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_user_id", type = Long.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_role", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
+        }
+)
+
+@NamedStoredProcedureQuery(
+        name = "User.session",
+        procedureName = "update_reading_progress",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_session_id", type = Long.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_page_number", type = Long.class),
                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "out_message", type = String.class)
         }
 )

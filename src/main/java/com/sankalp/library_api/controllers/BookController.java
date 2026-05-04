@@ -3,6 +3,7 @@ package com.sankalp.library_api.controllers;
 import com.sankalp.library_api.dao.BookDao;
 import com.sankalp.library_api.dtos.BookCreateRequest;
 import com.sankalp.library_api.dtos.LoginRequest;
+import com.sankalp.library_api.dtos.SessionUpdate;
 import com.sankalp.library_api.models.Book;
 import com.sankalp.library_api.services.BookService;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.management.monitor.StringMonitor;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +127,12 @@ public class BookController {
             return ResponseEntity.status(401).body(response);
         }
 
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Map<String, Object>> update(@RequestBody SessionUpdate requestDto) {
+        Map<String, Object> response = bookService.update(requestDto);
         return ResponseEntity.ok(response);
     }
 }
